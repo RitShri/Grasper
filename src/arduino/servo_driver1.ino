@@ -9,11 +9,11 @@ Servo servo5;
 
 void setup() {
   // put your setup code here, to run once:
-  servo1.attach(6);
-  servo2.attach(3);
-  servo3.attach(9);
-  servo4.attach(10);
-  
+  servo1.attach(6); // Pointing
+  servo2.attach(3); // Thumb
+  servo3.attach(9); // Index
+  servo4.attach(11); // Middle
+  servo5.attach(5); // Pinky
 }
 
 void runServo(Servo servo1, Servo servo2, Servo servo3, Servo servo4, Servo servo5) {
@@ -39,6 +39,8 @@ void runServo(Servo servo1, Servo servo2, Servo servo3, Servo servo4, Servo serv
     servo3.write(i);
     delay(1);
     servo4.write(i);
+    delay(1);
+    servo5.write(i);
     delay(1);
   }
 }
