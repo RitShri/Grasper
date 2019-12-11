@@ -6,26 +6,26 @@ from sklearn.metrics import pairwise
 import serial
 import time
 
-bg = None
+background_image = None
 BAUD = 9600 # Baud Rate
 arduino = serial.Serial('/dev/ttyACM0', 9600) # Found with 'ls /dev/tty.*' [this changes each time the arduino is connected]
 print("Serial Port is open: {}".format(arduino.is_open))
 print("Baud Rate: {}".format(BAUD))
 
 def run_avg(image, accumWeight):
-    global bg
+    global background_image
     # initialize the background
-    if bg is None:
-        bg = image.copy().astype("float")
+    if background_image is None:
+        background_image = image.copy().astype("float")
         return
 
     # compute weighted average, accumulate it and update the background
-    cv2.accumulateWeighted(image, bg, accumWeight)
+    cv2.accumulateWeighted(image, background_image, accumWeight)
     
 def segment(image, threshold=20):
-    global bg
+    global background_image
     # differnce of background and frame
-    diff = cv2.absdiff(bg.astype("uint8"), image)
+    diff = cv2.absdiff(background_image.astype("uint8"), image)
 
     # threshold 
     thresholded = cv2.threshold(diff, threshold, 255, cv2.THRESH_BINARY)[1]
@@ -168,7 +168,7 @@ if __name__ == "__main__":
 
         roi = frame[top:bottom, right:left]
 
-        gray = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
+        gray = cv2.cvtColor(roi, cv2.COLOR_background_imageR2GRAY)
         gray = cv2.GaussianBlur(gray, (7, 7), 0)
 
         if num_frames < 30:
