@@ -5,7 +5,7 @@ import time
 # Setup
 # 0(RX), 1(TX) Serial Pins
 BAUD = 9600 # Baud Rate
-arduino = serial.Serial('/dev/tty.usbmodem14101', 9600) # Found with 'ls /dev/tty.*' [this changes each time the arduino is connected]
+arduino = serial.Serial('/dev/ttyACM0', 9600) # Found with 'ls /dev/tty.*' [this changes each time the arduino is connected]
 print("Serial Port is open: {}".format(arduino.is_open))
 print("Baud Rate: {}".format(BAUD))
 # Serial pins for communication: 0(RX), 1(TX)
