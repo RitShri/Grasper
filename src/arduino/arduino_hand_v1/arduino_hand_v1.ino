@@ -1,4 +1,5 @@
-char serialData
+#include "Servo.h"
+char serialData;
 int pin=10;
 
 Servo servo1; // Pointing Finger
@@ -18,11 +19,26 @@ void setup() {
   Serial.begin(9600);
 }
 
-void runServos(state) {
+void runServos(char state) {
   int i;
   int j;
-  if (state == "R") {
-    for (i=0; i<180; i++) {
+  if (state == 'S') {
+       for (j=180; j > 0; j--){ //edit
+          servo2.write(j); //edit
+          delay(1);
+          servo3.write(j);
+          delay(1);
+          servo5.write(j);
+          delay(1);
+       }
+       for (i=0; i < 180; i++){ //edit
+          servo1.write(i);
+          delay(1);
+          servo4.write(i);
+          delay(1);
+       }
+  } else if (state == 'R') {
+    for (i=180; i > 0; i--) { //edit
       servo1.write(i);
       delay(1);
       servo2.write(i);
@@ -33,8 +49,8 @@ void runServos(state) {
       delay(1);
       servo5.write(i);
       delay(1);
-    }} else if (state == "P") {
-        for (i=180; i > 0; i--) {
+    }} else if (state == 'P') {
+        for (i=0; i < 180; i++) {
           servo1.write(i);
           delay(1);
           servo2.write(i);
@@ -45,22 +61,7 @@ void runServos(state) {
           delay(1);
           servo5.write(i);
           delay(1);
-    }} else if (state == "S") {
-       for (i=180; i < 0; i--){
-          servo2.write(i);
-          delay(1);
-          servo3.write(i);
-          delay(1);
-          servo5.write(i);
-          delay(1);
-       }
-       for (j=0; j > 180; j++) {
-          servo1.write(j);
-          delay(1);
-          servo4.write(j);
-          delay(1);
-       }
-    }
+    }}
 }
 
 void loop() {

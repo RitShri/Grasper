@@ -5,7 +5,7 @@ import time
 # Setup
 # 0(RX), 1(TX) Serial Pins
 BAUD = 9600 # Baud Rate
-arduino = serial.Serial('/dev/tty.usbmodem14201', 9600) # Found with 'ls /dev/tty.*' [this changes each time the arduino is connected]
+arduino = serial.Serial('/dev/tty.usbmodem14101', 9600) # Found with 'ls /dev/tty.*' [this changes each time the arduino is connected]
 print("Serial Port is open: {}".format(arduino.is_open))
 print("Baud Rate: {}".format(BAUD))
 # Serial pins for communication: 0(RX), 1(TX)
@@ -17,9 +17,9 @@ class RobotHand():
     states = ("Rock", "Paper", "Scissors")
 
     def __init__(self):
-        self.state = states[1]
+        self.state = self.states[1]
 
-    def state_transition(state):
+    def state_transition(self, state):
         """
         Abstraction for an FSM to move from one state to another
 
@@ -28,27 +28,27 @@ class RobotHand():
         """
         self.state = state
 
-    def play_rock():
+    def play_rock(self):
         """
         Activate servos that form Rock hand.
         """
-        state_transition("Rock")
+        self.state_transition("Rock")
         print("Rock!")
         arduino.write(b"R")
 
-    def play_paper():
+    def play_paper(self):
         """
         Activate respective seros [list them here] to form paper hand.
         """
+        self.state_transition("Paper")
         print("Paper!")
-        state_transition("Paper")
         arduino.write(b"P")
 
-    def play_scissor():
+    def play_scissor(self):
         """
         Activate respecftive servos [list them here] to form the scissor hand.
         """
-        state_transition("Scissor")
+        self.state_transition("Scissor")
         print("Scissor!")
         arduino.write(b"S")
 
@@ -70,7 +70,7 @@ def game_on():
         elif u_input in ["quit", "q"]:
             print("Program Exiting")
             time.sleep(0.1)
-            ser.close()
+            arduino.close()
             break
         else:
             print("Invalid input. Type on / off / quit.")
